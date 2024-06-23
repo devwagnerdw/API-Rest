@@ -33,57 +33,13 @@ public class Medico {
     private Boolean ativo;
 
     public Medico(DadosCadastroMedico dados) {
-        this.ativo= true;
+        this.ativo = true;
         this.nome = dados.nome();
         this.email = dados.email();
         this.telefone = dados.telefone();
         this.crm = dados.crm();
         this.especialidade = dados.especialidade();
         this.endereco = new Endereco(dados.endereco());
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
-    public String getCrm() {
-        return crm;
-    }
-
-
-    public Especialidade getEspecialidade() {
-        return especialidade;
-    }
-
-
-    public Endereco getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
     }
 
     public void atualizarInformacoes(DadosAtualizacaoMedico dados) {
@@ -96,9 +52,10 @@ public class Medico {
         if (dados.endereco() != null) {
             this.endereco.atualizarInformacoes(dados.endereco());
         }
+
     }
 
     public void excluir() {
-        this.ativo=false;
+        this.ativo = false;
     }
 }

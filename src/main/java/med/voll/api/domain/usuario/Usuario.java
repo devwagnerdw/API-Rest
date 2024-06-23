@@ -24,19 +24,6 @@ public class Usuario implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String login;
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
     private String senha;
 
     @Override
@@ -73,6 +60,4 @@ public class Usuario implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
-
 }
