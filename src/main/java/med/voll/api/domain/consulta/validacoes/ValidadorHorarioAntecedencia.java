@@ -18,5 +18,5 @@ public class ValidadorHorarioAntecedencia implements ValidadorAgendamentoDeConsu
         if (diferencaEmMinutos < 30) {
             throw new ValidacaoException("Consulta deve ser agendada com antecedência mínima de 30 minutos");
         }
-}
+    }
 }
