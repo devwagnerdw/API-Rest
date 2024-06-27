@@ -1,9 +1,8 @@
 package med.voll.api.domain.medico;
 
-
-import med.voll.api.domain.endereco.DadosEndereco;
-import med.voll.api.paciente.DadosCadastroPaciente;
 import med.voll.api.domain.consulta.Consulta;
+import med.voll.api.domain.endereco.DadosEndereco;
+import med.voll.api.domain.paciente.DadosCadastroPaciente;
 import med.voll.api.domain.paciente.Paciente;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +19,6 @@ import java.time.temporal.TemporalAdjusters;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ActiveProfiles("test")
@@ -35,34 +33,39 @@ class MedicoRepositoryTest {
     @Test
     @DisplayName("Deveria devolver null quando unico medico cadastrado nao esta disponivel na data")
     void escolherMedicoAleatorioLivreNaDataCenario1() {
-
+        //given ou arrange
         var proximaSegundaAs10 = LocalDate.now()
                 .with(TemporalAdjusters.next(DayOfWeek.MONDAY))
                 .atTime(10, 0);
-
         var medico = cadastrarMedico("Medico", "medico@voll.med", "123456", Especialidade.CARDIOLOGIA);
         var paciente = cadastrarPaciente("Paciente", "paciente@email.com", "00000000000");
         cadastrarConsulta(medico, paciente, proximaSegundaAs10);
 
+        //when ou act
         var medicoLivre = medicoRepository.escolherMedicoAleatorioLivreNaData(Especialidade.CARDIOLOGIA, proximaSegundaAs10);
-        assertThat(medicoLivre).isNull();
 
+        //then ou assert
+        assertThat(medicoLivre).isNull();
     }
 
     @Test
     @DisplayName("Deveria devolver medico quando ele estiver disponivel na data")
     void escolherMedicoAleatorioLivreNaDataCenario2() {
+        //given ou arrange
         var proximaSegundaAs10 = LocalDate.now()
                 .with(TemporalAdjusters.next(DayOfWeek.MONDAY))
                 .atTime(10, 0);
         var medico = cadastrarMedico("Medico", "medico@voll.med", "123456", Especialidade.CARDIOLOGIA);
 
+        //when ou act
         var medicoLivre = medicoRepository.escolherMedicoAleatorioLivreNaData(Especialidade.CARDIOLOGIA, proximaSegundaAs10);
+
+        //then ou assert
         assertThat(medicoLivre).isEqualTo(medico);
     }
 
     private void cadastrarConsulta(Medico medico, Paciente paciente, LocalDateTime data) {
-        em.persist(new Consulta(null, medico, paciente, data));
+        em.persist(new Consulta(null, medico, paciente, data, null));
     }
 
     private Medico cadastrarMedico(String nome, String email, String crm, Especialidade especialidade) {
@@ -88,7 +91,7 @@ class MedicoRepositoryTest {
         );
     }
 
-    private med.voll.api.paciente.DadosCadastroPaciente dadosPaciente(String nome, String email, String cpf) {
+    private DadosCadastroPaciente dadosPaciente(String nome, String email, String cpf) {
         return new DadosCadastroPaciente(
                 nome,
                 email,
